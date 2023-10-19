@@ -19,7 +19,7 @@ const Hero = () => {
       </nav>
 
       <h1 className="head_text">
-        Summarize Articles with <br className="max-md:hidden" />
+        Summarize Articles using <br className="max-md:hidden" />
         <span className="blue_gradient">OpenAI - GPT4</span>
       </h1>
       <h2 className="desc">
