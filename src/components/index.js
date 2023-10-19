@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
-import Footer from './Footer';
+import Hero from './Hero';
+import ArticleSummary from './ArticleSummary';
 
-export { Navbar, Footer };
+export { Hero, ArticleSummary };

@@ -1,10 +1,17 @@
-import './App.css';
+import { Hero, ArticleSummary } from './components';
 
 const App = () => {
   return (
-    <main className="text-3xl font-bold text-gray-300">
-      Artifical Inteligence | Software As a Service{' '}
-    </main>
+    <>
+      <div className="main">
+        <div className="gradient" />
+      </div>
+
+      <div className="app">
+        <Hero />
+        <ArticleSummary />
+      </div>
+    </>
   );
 };
 
