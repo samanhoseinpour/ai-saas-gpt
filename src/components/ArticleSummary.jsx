@@ -1,15 +1,30 @@
 import { useState, useEffect } from 'react';
 
 import { linkIcon } from '../assets';
+import { useLazyGetSummaryQuery } from '../services/apis/articleApi';
 
 const ArticleSummary = () => {
+  const [getSummary, { isLoading, error }] = useLazyGetSummaryQuery();
+
   const [article, setArticle] = useState({
     url: '',
     summary: '',
   });
 
-  const handleSubmit = async () => {
-    alert('Submitted');
+  // if (isLoading) return 'Loading...';
+
+  // if (error) throw new Error(error?.message);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { data } = await getSummary({ articleUrl: article?.url });
+
+    if (data?.summary) {
+      const newArticle = { ...article, summary: data?.summary };
+
+      setArticle(newArticle);
+    }
   };
 
   useEffect(() => {}, []);
@@ -48,6 +63,9 @@ const ArticleSummary = () => {
       </div>
 
       {/* Display results */}
+      <div>
+        <p>{article?.summary}</p>
+      </div>
     </section>
   );
 };
