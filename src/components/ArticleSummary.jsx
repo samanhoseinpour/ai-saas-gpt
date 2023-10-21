@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react';
 
-import { linkIcon } from '../assets';
+import { linkIcon, copy } from '../assets';
 import { useLazyGetSummaryQuery } from '../services/apis/articleApi';
 
 const ArticleSummary = () => {
   const [getSummary, { isLoading, error }] = useLazyGetSummaryQuery();
-
   const [article, setArticle] = useState({
     url: '',
     summary: '',
   });
+  const [allArticles, setAllArticles] = useState([]);
 
+  useEffect(() => {
+    const articlesFromLocaleStorage = JSON.parse(
+      localStorage.getItem('articles')
+    );
+
+    if (articlesFromLocaleStorage) {
+      setAllArticles(articlesFromLocaleStorage);
+    }
+  }, []);
   // if (isLoading) return 'Loading...';
 
   // if (error) throw new Error(error?.message);
@@ -22,12 +31,14 @@ const ArticleSummary = () => {
 
     if (data?.summary) {
       const newArticle = { ...article, summary: data?.summary };
+      const updatedAllArticles = [newArticle, ...allArticles];
 
       setArticle(newArticle);
+      setAllArticles(updatedAllArticles);
+
+      localStorage.setItem('articles', JSON.stringify(updatedAllArticles));
     }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <section className="w-full max-w-xl mt-16">
@@ -60,6 +71,26 @@ const ArticleSummary = () => {
         </form>
 
         {/* Browse URL History */}
+        <div className="flex flex-col gap-1 max-h-60 overflow-y-auto">
+          {allArticles.map((article, index) => (
+            <div
+              className="link_card"
+              key={`link-${index}`}
+              onClick={() => setArticle(article)}
+            >
+              <div className="copy_btn">
+                <img
+                  src={copy}
+                  alt="copy"
+                  className="w-[40%] h-[40%] object-contain"
+                />
+              </div>
+              <p className="flex-1 font-satoshi text-blue-700 font-medium text-sm truncate">
+                {article?.url}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Display results */}
