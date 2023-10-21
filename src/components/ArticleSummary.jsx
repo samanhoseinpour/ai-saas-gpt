@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { linkIcon, copy, loader } from '../assets';
+import { linkIcon, copy, loader, tick } from '../assets';
 import { useLazyGetSummaryQuery } from '../services/apis/articleApi';
 
 const ArticleSummary = () => {
@@ -10,6 +10,7 @@ const ArticleSummary = () => {
     summary: '',
   });
   const [allArticles, setAllArticles] = useState([]);
+  const [copied, setCopied] = useState('');
 
   useEffect(() => {
     const articlesFromLocaleStorage = JSON.parse(
@@ -20,9 +21,6 @@ const ArticleSummary = () => {
       setAllArticles(articlesFromLocaleStorage);
     }
   }, []);
-  // if (isLoading) return 'Loading...';
-
-  // if (error) throw new Error(error?.message);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +36,12 @@ const ArticleSummary = () => {
 
       localStorage.setItem('articles', JSON.stringify(updatedAllArticles));
     }
+  };
+
+  const handleCopy = (copyUrl) => {
+    setCopied(copyUrl);
+    navigator.clipboard.writeText(copyUrl);
+    setTimeout(() => setCopied(false), 3000);
   };
 
   return (
@@ -78,9 +82,12 @@ const ArticleSummary = () => {
               key={`link-${index}`}
               onClick={() => setArticle(article)}
             >
-              <div className="copy_btn">
+              <div
+                className="copy_btn"
+                onClick={() => handleCopy(article?.url)}
+              >
                 <img
-                  src={copy}
+                  src={copied === article?.url ? tick : copy}
                   alt="copy"
                   className="w-[40%] h-[40%] object-contain"
                 />
