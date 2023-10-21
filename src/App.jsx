@@ -2,7 +2,7 @@ import { Hero, ArticleSummary } from './components';
 
 const App = () => {
   return (
-    <>
+    <main>
       <div className="main">
         <div className="gradient" />
       </div>
@@ -11,7 +11,7 @@ const App = () => {
         <Hero />
         <ArticleSummary />
       </div>
-    </>
+    </main>
   );
 };
 
