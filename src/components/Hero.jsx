@@ -23,9 +23,9 @@ const Hero = () => {
         <span className="blue_gradient">OpenAI - GPT4</span>
       </h1>
       <h2 className="desc">
-        Simplify your reading with our Summarize Articles SaaS Platform, an
-        open-source article summarizer that transforms lengthy articles into
-        clear and consice summaries.
+        Simplify your reading with our Summarize Articles which is Software as a
+        Serivce Platform, an open-source article summarizer that transforms
+        lengthy articles into clear and consice summaries.
       </h2>
     </header>
   );
